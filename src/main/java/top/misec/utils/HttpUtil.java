@@ -29,8 +29,7 @@ import java.util.Optional;
 @Log4j2
 public class HttpUtil {
 
-    private static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-            "(KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36 Edg/85.0.564.70";
+    private static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36";
 
     public static void setUserAgent(String userAgent) {
         HttpUtil.userAgent = userAgent;
@@ -79,9 +78,14 @@ public class HttpUtil {
         }
         httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
         httpPost.setHeader("Referer", "https://www.bilibili.com/");
-        httpPost.setHeader("Connection", "keep-alive");
-        httpPost.setHeader("User-Agent", userAgent);
+        httpPost.setHeader("accept", "*/*");
+        httpPost.setHeader("accept-encoding", "gzip, deflate, br");
+        httpPost.setHeader("accept-language", "zh-CN,zh;q=0.9");
         httpPost.setHeader("Cookie", verify.getVerify());
+        httpPost.setHeader("sec-fetch-dest", "empty");
+        httpPost.setHeader("sec-fetch-mode", "cors");
+        httpPost.setHeader("sec-fetch-site", "same-site");
+        httpPost.setHeader("User-Agent", userAgent);
 
         // 封装post请求参数
 
@@ -137,8 +141,17 @@ public class HttpUtil {
             // 设置请求头信息，鉴权
             httpGet.setHeader("Referer", "https://www.bilibili.com/");
             httpGet.setHeader("Connection", "keep-alive");
-            httpGet.setHeader("User-Agent", userAgent);
+            httpGet.setHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+            httpGet.setHeader("accept-encoding", "gzip, deflate, br");
+            httpGet.setHeader("accept-language", "zh-CN,zh;q=0.9");
+            httpGet.setHeader("cache-control", "max-age=0");
             httpGet.setHeader("Cookie", verify.getVerify());
+            httpGet.setHeader("sec-fetch-dest", "document");
+            httpGet.setHeader("sec-fetch-mode", "navigate");
+            httpGet.setHeader("sec-fetch-site", "none");
+            httpGet.setHeader("sec-fetch-user", "?1");
+            httpGet.setHeader("upgrade-insecure-requests", "1");
+            httpGet.setHeader("User-Agent", userAgent);
             for (NameValuePair pair : getPairList(pJson)) {
                 httpGet.setHeader(pair.getName(), pair.getValue());
             }
